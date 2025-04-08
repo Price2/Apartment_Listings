@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApartmentsService } from './apartments/apartments.service';
+import { ApartmentsModule } from './apartments/apartments.module';
 
 
 @Module({
@@ -16,6 +16,7 @@ import { ApartmentsService } from './apartments/apartments.service';
       synchronize: true, // set to false in production
       logging: true,
     }),
+    ApartmentsModule
   ],
 })
 export class AppModule {}
