@@ -71,18 +71,6 @@ export default function RootLayout({
                     Apartments
                   </Button>
                 </Link>
-                <Link href="/add-apartment" passHref>
-                  <Button
-                    sx={{
-                      color: "#D1D5DB",
-                      textTransform: "none",
-                      fontWeight: 500,
-                      "&:hover": { color: "#FFFFFF" },
-                    }}
-                  >
-                    Add Apartment
-                  </Button>
-                </Link>
               </Box>
             </Toolbar>
           </Container>

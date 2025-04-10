@@ -114,11 +114,11 @@ export default function AddApartmentDialog({
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={onClose} color="secondary">
-                        Cancel
-                    </Button>
                     <Button type="submit" variant="contained" color="primary">
                         Add Apartment
+                    </Button>
+                    <Button onClick={onClose} color="secondary">
+                        Cancel
                     </Button>
                 </DialogActions>
             </form>

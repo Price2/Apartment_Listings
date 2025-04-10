@@ -2,12 +2,12 @@
 // This is a client component that fetches and displays a list of apartments
 import React, { useEffect, useState } from "react";
 import {
-    Card, CardContent, CardMedia, Typography, Box, Chip, Button,
-    TextField, Container, Dialog, DialogTitle, DialogContent,
-    DialogActions, DialogContentText
-} from "@mui/material";
+    Typography, Box, 
+    Container
+    } from "@mui/material";
 import AddApartmentDialog from './components/AddApartmentDialog';
-import AddIcon from '@mui/icons-material/Add';
+import Header from "./components/Header";
+import ApartmentCard from "./components/ApartmentCard";
 
 interface Apartment {
     id: number;
@@ -19,6 +19,8 @@ interface Apartment {
 
 export default function ApartmentsPage() {
     const [apartments, setApartments] = useState<Apartment[]>([]);
+    const [message, setMessage] = useState(""); // Unified message for both cases
+    const [searchQuery, setSearchQuery] = useState("");
     const [openDialog, setOpenDialog] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -110,195 +112,65 @@ export default function ApartmentsPage() {
 
 
     useEffect(() => {
-        // Fetch apartments from the backend API
-        fetch("http://localhost:5000/apartments")
-            .then((response) => response.json())
-            .then((data) => setApartments(data))
-            .catch((error) => console.error("Error fetching apartments:", error));
+        const fetchApartments = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/apartments");
+                const data = await response.json();
+                if (data.length === 0) {
+                    setMessage("There are currently no apartment listings");
+                } else {
+                    setApartments(data);
+                    setMessage("");
+                }
+            } catch (error) {
+                console.error("Error fetching apartments:", error);
+            }
+        };
+
+        fetchApartments();
     }, []);
 
 
 
 
+
     return (
+
         <Container>
-            <Box sx={{ position: "relative", width: "100%", height: "350px", mb: 8 }}>
-                {/* Background Image with Gradient Overlay */}
-                <Box
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                        backgroundImage:
-                            'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("/search_apartments.jpg")',
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        borderRadius: 2,
-                        filter: "brightness(1.5)",
-                    }}
-                />
-                {/* Search Card overlaid on the hero image */}
-                <Box
-                    sx={{
-                        position: "absolute",
-                        bottom: "-30px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "90%",
-                        maxWidth: "600px",
-                    }}
-                >
-                    <Card
-                        sx={{
-                            boxShadow: "0px 4px 20px rgba(255, 255, 255, 0.15)",
-                            borderRadius: 3,
-                            p: 2,
-                            '&:hover': {
-                                boxShadow: "0px 8px 30px rgba(255, 255, 255, 0.3)"
-                            }
-                        }}
-                    >
-                        <CardContent sx={{ pt: 0 }}>
-                            <Typography variant="h6" gutterBottom>
-                                Properties For Sale and For Rent
-                            </Typography>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                                <TextField
-                                    fullWidth
-                                    placeholder="Search apartments..."
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{
-                                        borderRadius: 2,
-                                        "& fieldset": { borderRadius: "8px" },
-                                    }}
-                                />
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    sx={{
-                                        borderRadius: "8px",
-                                        boxShadow: 3,
-                                        textTransform: "none",
-                                        px: 3,
-                                        py: 1,
-                                        transition: "all 0.3s ease",
-                                        "&:hover": {
-                                            boxShadow: 6,
-                                        },
-                                    }}
-                                >
-                                    Search
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={<AddIcon />}
-                                    onClick={() => setOpenDialog(true)}
-                                    sx={{
-                                        borderRadius: "8px",
-                                        textTransform: "none",
-                                        px: 3,
-                                        borderWidth: "2px",
-                                        "&:hover": { borderWidth: "2px" }
-                                    }}
-                                >
-                                    Add
-                                </Button>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                </Box>
-            </Box>
+            {/* Header Section */}
+            
+            <Header
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                setApartments={setApartments}
+                setNoResultsMessage={setMessage}
+                setOpenDialog={setOpenDialog}
+            />
+
+            
             {/* Header Section */}
             <Typography variant="h4" gutterBottom>
                 Apartments
             </Typography>
+            {message ? (
+                <Typography
+                    variant="h6"
+                    sx={{ textAlign: "center", mt: 4, color: "gray" }}
+                >
+                    {message}
+                </Typography>
+            ) : (
+                <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={4}>
+                    {apartments.map((apartment) => (
+                        <ApartmentCard
+                            key={apartment.id}
+                            apartment={apartment}
+                        />
+                    ))}
+                </Box>
+            )}
 
-
-            <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={4}>
-                {apartments.map((apartment) => (
-                    <Card
-                        key={apartment.id}
-                        sx={{
-                            mb: 3,
-                            maxWidth: 345,
-                            boxShadow: "0px 4px 20px rgba(255, 255, 255, 0.25)",
-                            '&:hover': {
-                                boxShadow: "0px 8px 30px rgba(255, 255, 255, 0.3)",
-                                transform: "translateY(-4px)",
-                                transition: "all 0.3s ease"
-                            }
-                        }}
-                    >
-                        {/* Image Section */}
-                        <Box sx={{ position: "relative" }}>
-                            <CardMedia
-                                component="img"
-                                height="200"
-                                image={"/apartment_card.jpg"}
-                                alt={apartment.name}
-                            />
-                            <Chip
-                                label="Available"
-                                color="success"
-                                size="small"
-                                sx={{
-                                    position: "absolute",
-                                    top: 8,
-                                    left: 8,
-                                    fontWeight: "bold",
-                                }}
-                            />
-                        </Box>
-
-                        {/* Card Content */}
-                        <CardContent sx={{ pb: 0 }}>
-                            <Typography variant="h6" component="div" color="text.primary">
-                                {apartment.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {apartment.location}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-                                {apartment.description}
-                            </Typography>
-                            <Typography variant="h6" color="text.primary" sx={{ marginTop: 1 }}>
-                                {Number(apartment.price).toLocaleString("en-US")} EGP
-                            </Typography>
-                            <Box sx={{ display: "flex", gap: 1, marginTop: 2 }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    sx={{
-                                        width: 20,
-                                        height: 20,
-                                        minWidth: 0,
-                                        borderRadius: "50%",
-                                        padding: 0,
-                                    }}
-                                >
-                                    <i className="fas fa-phone"></i>
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                    size="small"
-                                    sx={{
-                                        width: 20,
-                                        height: 20,
-                                        minWidth: 0,
-                                        borderRadius: "50%",
-                                        padding: 0,
-                                    }}
-                                >
-                                    <i className="fab fa-whatsapp"></i>
-                                </Button>
-                            </Box>
-                        </CardContent>
-                    </Card>
-                ))}
-            </Box>
+            {/* Add Apartment Dialog */}
             <AddApartmentDialog
                 open={openDialog}
                 onClose={() => {
@@ -311,8 +183,7 @@ export default function ApartmentsPage() {
                 errors={errors}
             />
         </Container>
-
-
-
     );
+
+
 }
