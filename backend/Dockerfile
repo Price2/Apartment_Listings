@@ -3,4 +3,4 @@ WORKDIR /backend
 COPY . .
 RUN npm install
 EXPOSE 5000
-CMD ["nest", "start"]
+CMD ["npx","nest" ,"start"]

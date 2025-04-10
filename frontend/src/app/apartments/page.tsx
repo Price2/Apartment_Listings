@@ -101,6 +101,7 @@ export default function ApartmentsPage() {
             if (response.ok) {
                 const newApartment = await response.json();
                 setApartments([...apartments, newApartment]);
+                setMessage("");
                 setOpenDialog(false);
                 setFormData({ name: '', location: '', price: '', description: '' });
                 setErrors({ name: '', location: '', price: '', description: '' });
