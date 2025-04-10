@@ -7,7 +7,7 @@ import { ApartmentsModule } from './apartments/apartments.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'postgres',
       port: 5432, // default port for PostgreSQL
       username: 'admin',
       password: 'admin',

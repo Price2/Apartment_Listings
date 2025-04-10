@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: apartments-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: apartments
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  backend:
+    build: ./backend
+    container_name: apartments-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=admin
+      - DATABASE_NAME=apartments
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: apartments-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
