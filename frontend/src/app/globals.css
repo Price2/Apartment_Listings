@@ -25,7 +25,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* In your global CSS */
 .MuiCard-root {
   transition: all 0.3s ease;
 }

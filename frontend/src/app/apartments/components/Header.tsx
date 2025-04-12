@@ -7,8 +7,6 @@ import AddIcon from '@mui/icons-material/Add';
 export default function Header({
     searchQuery,
     setSearchQuery,
-    setApartments,
-    setNoResultsMessage,
     setOpenDialog,
     handleSearch,
 }: {
@@ -22,7 +20,7 @@ export default function Header({
 
 
     return (
-        <Box sx={{ position: "relative", width: "100%", height: "350px", mb: 8 }}>
+        <Box sx={{ position: "relative", width: "100%", height: "350px", mb: 8, mt:10 }}>
             {/* Background Image with Gradient Overlay */}
             <Box
                 sx={{

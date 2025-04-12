@@ -1,5 +1,4 @@
-// components/Navbar.tsx
-"use client"; // 👈 Marks this as a client component
+"use client"; 
 import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
 import Link from "next/link";
 
@@ -10,7 +9,6 @@ export default function Navbar() {
       sx={{
         backgroundColor: "#111827",
         boxShadow: 1,
-        mb: 10
       }}
     >
       <Container maxWidth="lg">
