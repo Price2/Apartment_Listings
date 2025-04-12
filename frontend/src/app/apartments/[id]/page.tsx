@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Box, Typography, Button, Grid, Paper } from "@mui/material";
+import { Container, Box, Typography, Grid, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
@@ -19,7 +19,7 @@ export default function ApartmentPage() {
 
     useEffect(() => {
         if (id) {
-            // Fetch apartment details from the backend
+            // Fetch apartment details from the backend with query parameter
             fetch(`http://localhost:5000/apartments/${id}`)
                 .then((response) => response.json())
                 .then((data) => setApartment(data))

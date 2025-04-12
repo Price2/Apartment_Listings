@@ -166,7 +166,6 @@ export default function ApartmentsPage() {
       />
 
 
-      {/* Header Section */}
       <Typography variant="h4" gutterBottom>
         Apartments
       </Typography>
@@ -188,7 +187,7 @@ export default function ApartmentsPage() {
         </Box>
       )}
 
-      {/* Add Apartment Dialog */}
+      {/*Apartment Modal to add new apartments */}
       <AddApartmentDialog
         open={openDialog}
         onClose={() => {

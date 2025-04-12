@@ -7,7 +7,6 @@ export default function ApartmentsLayout({
 }) {
   return (
     <div>
-      {/* Add any layout-specific components like a header or sidebar here */}
       {children}
     </div>
   );

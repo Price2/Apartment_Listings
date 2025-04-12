@@ -1,7 +1,6 @@
 "use client";
 import {
-    Card, CardContent, CardMedia, Typography, Box, Chip, Button,
-    TextField
+    Card, CardContent, CardMedia, Typography, Box,
 } from "@mui/material";
 import { useRouter } from 'next/navigation'
 

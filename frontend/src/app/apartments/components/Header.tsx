@@ -1,5 +1,5 @@
 import {
-    Card, CardContent, CardMedia, Typography, Box, Chip, Button,
+    Card, CardContent, Typography, Box, Button,
     TextField
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
@@ -21,7 +21,7 @@ export default function Header({
 
     return (
         <Box sx={{ position: "relative", width: "100%", height: "350px", mb: 8, mt:10 }}>
-            {/* Background Image with Gradient Overlay */}
+            {/* Background Image */}
             <Box
                 sx={{
                     width: "100%",
