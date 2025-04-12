@@ -9,13 +9,14 @@ import {
     Button
 } from "@mui/material";
 
+
 export default function AddApartmentDialog({
     open,
     onClose,
     formData,
     setFormData,
     handleSubmit,
-    errors // Add errors prop
+    errors
 }: {
     open: boolean;
     onClose: () => void;
@@ -32,7 +33,7 @@ export default function AddApartmentDialog({
         description: string;
     }) => void;
     handleSubmit: () => void;
-    errors: { // Add errors type definition
+    errors: { 
         name: string;
         location: string;
         price: string;
@@ -90,7 +91,7 @@ export default function AddApartmentDialog({
                         error={!!errors.price}
                         helperText={errors.price}
                         slotProps={{
-                            htmlInput: { // Changed from htmlInput to input
+                            htmlInput: {
                                 min: 0,
                                 inputMode: "numeric",
                                 pattern: "[0-9]*",
